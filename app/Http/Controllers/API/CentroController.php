@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Centro;
 use Illuminate\Http\Request;
 use App\Http\Resources\CentroResource;
+use Illuminate\Support\Facades\Http;
 
 class CentroController extends Controller
 {
@@ -17,6 +18,16 @@ class CentroController extends Controller
     public function index()
     {
         return CentroResource::collection(Centro::paginate());
+        //$response = Http::get('https://datosabiertos.regiondemurcia.es/catalogo/api/action//datastore_search?resource_id=52dd8435-46aa-495e-bd2b-703263e576e7&limit=5&sort=DESCRIPCIONLOCALIDAD'); //Agregado la ordenacion por DESCRIPCIONLOCALIDAD
+        //return response()->json(json_decode($response));
+    }
+
+    //Esta modificacion se complementa con las rutas del API, para poder tener dos endPoint, segun la peticion devolvemos de la BD o de API externa
+    public function indexAPIRM()
+    {
+        //return CentroResource::collection(Centro::paginate());
+        $response = Http::get('https://datosabiertos.regiondemurcia.es/catalogo/api/action//datastore_search?resource_id=52dd8435-46aa-495e-bd2b-703263e576e7&limit=5&sort=DESCRIPCIONLOCALIDAD'); //Agregado la ordenacion por DESCRIPCIONLOCALIDAD
+        return response()->json(json_decode($response));
     }
 
     /**
