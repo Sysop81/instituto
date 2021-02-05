@@ -1,5 +1,5 @@
 <?php
-
+use App\Http\Resources\CentroResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Validation\ValidationException;
@@ -53,10 +53,11 @@ Route::post('/tokens/create', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function() {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
+    Route::get('/user', function (Request $request) {      //Esto seria provisional
+        //return $request->user()->centroCoordinado->nombre; //centroCoordinado, se puede usar con y sin parentesis
+        return new CentroResource($request->user()->centroCoordinado);
+    });                                                    //De esta forma laravel nos devuelve el centro coordinado por el usuario autenticado
+                //return new CentroResource($request->user()-centroCoordinado); //Con esto devolvemos el recurso, es para entender concepto
     Route::apiResource('centros', CentroController::class);
 
     Route::apiResource('periodoslectivos', PeriodolectivoController::class)->parameters(['periodoslectivos' => 'periodolectivo']);

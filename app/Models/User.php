@@ -45,4 +45,21 @@ class User extends Authenticatable
     public function isAdministrator() {
         return $this->id == 1;
     }
+
+    /**
+     * Devolver el centro que coordina.
+     */
+    public function centroCoordinado()
+    {
+        return $this->hasOne(Centro::class, 'coordinador'); // Coordinador es el nombre de la clave ajena en centro
+    }
+
+    /**
+     * Los grupos en los que está matriculado un determinado alumno.
+     */
+    public function grupos()
+    {
+        return $this->belongsToMany(Grupo::class, 'matriculas', 'alumno', 'grupo'); //Matriculas es la tabla, y alumno y grupo las claves ajenas
+    }
+
 }

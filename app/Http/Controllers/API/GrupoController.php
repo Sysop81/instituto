@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\GrupoResource;
 use App\Models\Grupo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GrupoController extends Controller
 {
@@ -16,7 +17,9 @@ class GrupoController extends Controller
      */
     public function index()
     {
-        return GrupoResource::collection(Grupo::paginate());
+        //return GrupoResource::collection(Grupo::paginate()); //Devolvemos todos los grupos
+        $gruposDelUsuarioAutenticado = Auth::user()->grupos;  //Devolveiendo solo los grupos del usuario autenticado mediante el metodo grupos como propiedad dinamica
+        return GrupoResource::collection($gruposDelUsuarioAutenticado);
     }
 
     /**
