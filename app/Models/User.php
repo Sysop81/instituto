@@ -61,4 +61,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Grupo::class, 'matriculas', 'alumno', 'grupo');
     }
+
+    //Devuelve las notas de un usuario
+    public function notas(){
+        return $this->HasMany(Nota::class, 'user_id');
+    }
 }

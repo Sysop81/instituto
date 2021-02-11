@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Grupo;
+use App\Models\Nota;
+
 use App\Models\Matricula;
 
 class DatabaseSeeder extends Seeder
@@ -18,14 +20,17 @@ class DatabaseSeeder extends Seeder
     {
     	User::truncate();
     	Grupo::truncate();
-    	Matricula::truncate();
+        Matricula::truncate();
+        Nota::truncate();
         User::factory(10)->create();
         Grupo::factory(20)->create();
         Matricula::factory(15)->create();
+        Nota::factory(30)->create();
 
         $user = User::factory()
             ->has(Grupo::factory()->count(3))
             ->create();
+
     }
 
 }

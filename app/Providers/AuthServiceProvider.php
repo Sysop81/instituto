@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 use App\Models\Centro;
+use App\Models\Nota;
 use App\Policies\CentroPolicy;
+use App\Policies\NotaPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
@@ -17,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
         Centro::class => CentroPolicy::class,
         Materiamatriculada::class => MateriamatriculadaPolicy::class,
+        Nota::class => NotaPolicy::class,
     ];
 
     /**
