@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\DB;
+use App\Models\Auth;
 
 class User extends Authenticatable
 {
@@ -46,6 +48,16 @@ class User extends Authenticatable
         return $this->id == 1;
     }
 
+    public function isProfesor(){ //pARA ALUMNO CON matricula o materiasmatriculadas
+        //return  Materiaimpartida::where('docente', Auth::userId())->count() > 0; //Puede que la sintaxis falle
+        return DB::table('materiasimpartidas')->where('docente', Auth::userId())->count() > 0; //Asi si no esta el modelo hecho
+    }
+
+    public function isAlumno(){ //pARA ALUMNO CON matricula o materiasmatriculadas
+        //return  Materiaimpartida::where('docente', Auth::userId())->count() > 0; //Puede que la sintaxis falle
+        return DB::table('matricula')->where('docente', Auth::userId())->count() > 0; //Asi si no esta el modelo hecho
+    }
+
     /**
      * Devolver el centro que coordina.
      */
@@ -64,6 +76,6 @@ class User extends Authenticatable
 
     //Devuelve las notas de un usuario
     public function notas(){
-        return $this->HasMany(Nota::class, 'user_id');
+        return $this->HasMany(Nota::class, 'user_id'); //Al ser user_ib no necesitariamos ponerlo
     }
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Nota;
 use App\Http\Resources\NotaResource;
 use Illuminate\Http\Request;
+use App\Http\Controllers\API\DB;
 
 class NotaController extends Controller
 {
@@ -20,9 +21,14 @@ class NotaController extends Controller
     }
 
     public function getNotas($materia_id){
-        $notasDelUsuarioAutenticado = Auth::user()->notas;  //Devolveiendo solo las notas del usuario autenticado mediante el metodo grupos como propiedad dinamica
-        //Nota::find(1)->
-        return NotaResource::collection($notasDelUsuarioAutenticado);
+
+        //Autenticacion
+        $this->authorize('getNotas',$materia_id);
+
+        $media = DB::table('notas')->where('materia_id', $materia_id)->avg('nota');
+        return response()->json([
+            'data' => $media
+            ]);
     }
 
     /**
@@ -33,7 +39,7 @@ class NotaController extends Controller
      */
     public function store(Request $request)
     {
-        $this->authorize('create',$nota);
+        $this->authorize('create',Nota::class);
 
         $nota = json_decode($request->getContent(), true);
 

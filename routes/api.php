@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth:sanctum'], function() {
     niveles es nivel, nos hará la consulta pero nos devolverá todo a null */
 
     Route::apiResource('notas', NotaController::class);
-    Route::get('notas/media/{materia_id}', [NotaController::class, 'getNotas']);
+    Route::get('/notas/media/{materia_id}', [NotaController::class, 'getNotas']);
 });
 
 Route::get('centrosAPIRM', [CentroController::class, 'indexAPIRM']);

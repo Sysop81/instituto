@@ -33,6 +33,13 @@ class NotaPolicy
         //
     }
 
+    //Para autorizar al alumno
+    public function getNotas($user, $materia_id){
+        if ($user->isAlumno()) { //To do generar el metodo en el modelo User
+            return true;
+        }
+    }
+
     /**
      * Determine whether the user can create models.
      *
@@ -41,7 +48,9 @@ class NotaPolicy
      */
     public function create(User $user)
     {
-        //
+        if ($user->isProfesor()) {
+            return true;
+        }
     }
 
     /**
@@ -53,7 +62,9 @@ class NotaPolicy
      */
     public function update(User $user, Nota $nota)
     {
-        //
+        if ($user->isProfesor()) {
+            return true;
+        }
     }
 
     /**
@@ -65,7 +76,9 @@ class NotaPolicy
      */
     public function delete(User $user, Nota $nota)
     {
-        //
+        if ($user->isProfesor()) {
+            return true;
+        }
     }
 
     /**
